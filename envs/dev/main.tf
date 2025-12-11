@@ -18,10 +18,8 @@ module "ec2" {
   vpc_id           = module.vpc.vpc_id
   public_subnet_id = module.vpc.public_subnet_id
   my_ip            = var.my_ip
-  key_name         = "maksim-dev-key"
-  public_key_path  = "~/.ssh/maksim-key.pub"
   ami              = var.ami
   instance_type    = var.instance_type
-  private_key_path = "~/.ssh/maksim-key"
+  existing_key_name = "maksim-dev-key"
   ssh_user         = "ubuntu"
 }

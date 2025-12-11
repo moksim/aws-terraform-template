@@ -1,7 +1,7 @@
-resource "aws_key_pair" "key" {
-  key_name   = var.key_name
-  public_key = file(var.public_key_path)
-}
+#resource "aws_key_pair" "key" {
+#  key_name   = var.key_name
+#  public_key = file(var.public_key_path)
+#}
 
 resource "aws_security_group" "sg" {
   name        = "${var.name}-sg"
@@ -29,7 +29,7 @@ resource "aws_instance" "vm" {
   subnet_id                   = var.public_subnet_id
   vpc_security_group_ids      = [aws_security_group.sg.id]
   associate_public_ip_address = true
-  key_name                    = aws_key_pair.key.key_name
+  key_name                    = var.existing_key_name
 
   tags = {
     Name = var.name
