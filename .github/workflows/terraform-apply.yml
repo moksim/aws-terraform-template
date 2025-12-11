@@ -30,5 +30,10 @@ jobs:
         working-directory: envs/dev
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve
+        run: terraform apply -lock-timeout=5m -auto-approve
+        working-directory: envs/dev
+
+      - name: Unlock state (best effort)
+        if: failure()
+        run: terraform force-unlock -force $(terraform state pull | jq -r '.serial')
         working-directory: envs/dev
