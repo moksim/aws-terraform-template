@@ -5,9 +5,9 @@ provider "aws" {
 module "vpc" {
   source = "../../modules/vpc"
 
-  name               = "dev"
-  vpc_cidr           = "10.10.0.0/16"
-  public_subnet_cidr = "10.10.1.0/24"
+  name                = "dev"
+  vpc_cidr            = "10.10.0.0/16"
+  public_subnet_cidr  = "10.10.1.0/24"
   private_subnet_cidr = "10.10.2.0/24"
 }
 
@@ -22,6 +22,6 @@ module "ec2" {
   public_key_path  = "~/.ssh/maksim-key.pub"
   ami              = var.ami
   instance_type    = var.instance_type
-  private_key_path  = "~/.ssh/maksim-key"
-  ssh_user          = "ubuntu"
+  private_key_path = "~/.ssh/maksim-key"
+  ssh_user         = "ubuntu"
 }
