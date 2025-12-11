@@ -1,0 +1,16 @@
+# Terraform local cache
+.terraform/
+
+# Terraform lock file
+.terraform.lock.hcl
+
+# Local state files
+*.tfstate
+*.tfstate.*
+
+# Logs
+crash.log
+*.tfvars
+
+# IDE / OS files
+.DS_Store
