@@ -11,6 +11,6 @@ variable "instance_type" {
 }
 
 variable "my_ip" {
-
+  default = "127.0.0.1/32"
 }
 
