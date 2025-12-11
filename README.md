@@ -95,3 +95,4 @@ S3 bucket + DynamoDB table for locking
 - The repository is intentionally minimal and can be extended with NAT, ALB, RDS, EKS, etc.
 - The VPC and EC2 modules are written to be reusable in additional environments (`stage`, `prod`, etc.).
 - The layout follows typical patterns used in Terraform-based AWS projects.
+# test
