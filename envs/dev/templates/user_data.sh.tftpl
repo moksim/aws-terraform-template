@@ -1,0 +1,29 @@
+#!/bin/bash
+set -euo pipefail
+
+LOG_FILE="/var/log/poc-bootstrap.log"
+exec > >(tee -a "$${LOG_FILE}") 2>&1
+
+echo "Bootstrap started at $(date -Is)"
+
+# Detect OS and install awscli + curl
+if command -v apt-get >/dev/null 2>&1; then
+  apt-get update -y
+  apt-get install -y awscli curl
+elif command -v yum >/dev/null 2>&1; then
+  yum update -y
+  yum install -y awscli curl
+else
+  echo "Unsupported package manager"
+  exit 1
+fi
+
+echo "awscli version: $(aws --version 2>&1)"
+
+# Create a simple PoC marker file
+echo "Terraform PoC instance ready at $(date -Is)" > /opt/poc.txt
+
+# Upload bootstrap log to S3 logs bucket (proves IAM instance profile works)
+aws s3 cp "$${LOG_FILE}" "s3://${logs_bucket_name}/bootstrap/$(hostname)-bootstrap.log"
+
+echo "Bootstrap completed at $(date -Is)"

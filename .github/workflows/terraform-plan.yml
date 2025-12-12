@@ -37,7 +37,7 @@ jobs:
 
       - name: Terraform Plan
         run: |
-          terraform plan -no-color -input=false -lock-timeout=5m -var-file="dev.tfvars" | tee plan.txt
+          terraform plan -no-color -input=false -lock-timeout=5m | tee plan.txt
       - name: Comment PR with plan
         uses: actions/github-script@v7
         with:

@@ -32,7 +32,7 @@ resource "aws_instance" "vm" {
   key_name                    = var.existing_key_name
   iam_instance_profile        = var.iam_instance_profile
   user_data                   = var.user_data
-
+  user_data_replace_on_change = true
   tags = {
     Name = var.name
   }
