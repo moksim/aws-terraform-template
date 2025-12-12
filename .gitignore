@@ -11,6 +11,7 @@
 # Logs
 crash.log
 *.tfvars
+!envs/dev/dev.tfvars
 
 # IDE / OS files
 .DS_Store

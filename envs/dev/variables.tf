@@ -14,3 +14,15 @@ variable "my_ip" {
   default = "127.0.0.1/32"
 }
 
+variable "app_bucket_name" {
+  type = string
+}
+
+variable "logs_bucket_name" {
+  type = string
+}
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
