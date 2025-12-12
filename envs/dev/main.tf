@@ -2,6 +2,12 @@ provider "aws" {
   region = var.region
 }
 
+locals {
+  user_data = templatefile("${path.module}/templates/user_data.sh.tftpl", {
+    logs_bucket_name = module.s3.logs_bucket_name
+  })
+}
+
 module "vpc" {
   source = "../../modules/vpc"
 
@@ -23,6 +29,7 @@ module "ec2" {
   existing_key_name    = "maksim-dev-key"
   ssh_user             = "ubuntu"
   iam_instance_profile = module.iam.instance_profile_name
+  user_data            = local.user_data
 }
 
 module "s3" {

@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "app" {
 }
 
 resource "aws_s3_bucket_public_access_block" "app" {
-  bucket                  = aws_s3_bucket.app.id
+  bucket                  = var.app_bucket_name
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -33,7 +33,7 @@ resource "aws_s3_bucket" "logs" {
 }
 
 resource "aws_s3_bucket_public_access_block" "logs" {
-  bucket                  = aws_s3_bucket.logs.id
+  bucket                  = var.logs_bucket_name
   block_public_acls       = true
   block_public_policy     = true
   ignore_public_acls      = true
@@ -41,14 +41,14 @@ resource "aws_s3_bucket_public_access_block" "logs" {
 }
 
 resource "aws_s3_bucket_versioning" "logs" {
-  bucket = aws_s3_bucket.logs.id
+  bucket = var.logs_bucket_name
   versioning_configuration {
     status = "Enabled"
   }
 }
 
 resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
-  bucket = aws_s3_bucket.logs.id
+  bucket = var.logs_bucket_name
   rule {
     apply_server_side_encryption_by_default {
       sse_algorithm = "AES256"
@@ -57,7 +57,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "logs" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "logs" {
-  bucket = aws_s3_bucket.logs.id
+  bucket = var.logs_bucket_name
 
   rule {
     id     = "expire-old-logs"

@@ -12,6 +12,10 @@
 crash.log
 *.tfvars
 !envs/dev/dev.tfvars
+!envs/dev/dev.auto.tfvars
 
 # IDE / OS files
 .DS_Store
+
+# Contributor/agent guide
+AGENTS.md
