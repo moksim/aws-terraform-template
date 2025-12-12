@@ -2,7 +2,6 @@ name: Terraform Validate
 
 on:
   push:
-    branches: ["*"]
   pull_request:
 
 permissions:
@@ -11,22 +10,22 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
-      - name: Terraform Init
-        run: terraform init -backend=false
+      - name: Terraform Init (no backend)
         working-directory: envs/dev
+        run: terraform init -backend=false -input=false
 
       - name: Terraform Validate
-        run: terraform validate
         working-directory: envs/dev
-
+        run: terraform validate -no-color

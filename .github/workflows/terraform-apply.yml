@@ -2,38 +2,38 @@ name: Terraform Apply
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
 
 permissions:
   id-token: write
   contents: read
 
+concurrency:
+  group: terraform-apply
+  cancel-in-progress: false
+
 jobs:
   apply:
     runs-on: ubuntu-latest
+    environment: dev
+    defaults:
+      run:
+        shell: bash
+        working-directory: envs/dev
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure AWS Credentials (OIDC)
+      - name: Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::545892166941:role/github-terraform-role
           aws-region: us-east-1
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
-        run: terraform init
-        working-directory: envs/dev
+        run: terraform init -input=false
 
       - name: Terraform Apply
-        run: terraform apply -lock-timeout=5m -auto-approve
-        working-directory: envs/dev
-
-      - name: Unlock state (best effort)
-        if: failure()
-        run: terraform force-unlock -force $(terraform state pull | jq -r '.serial')
-        working-directory: envs/dev
+        run: terraform apply -auto-approve -input=false -lock-timeout=5m
