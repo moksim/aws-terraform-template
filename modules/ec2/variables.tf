@@ -10,3 +10,13 @@ variable "existing_key_name" {
 variable "ssh_user" {
   default = "ubuntu"
 }
+
+variable "iam_instance_profile" {
+  type    = string
+  default = null
+}
+
+variable "user_data" {
+  type    = string
+  default = null
+}

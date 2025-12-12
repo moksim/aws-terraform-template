@@ -30,6 +30,8 @@ resource "aws_instance" "vm" {
   vpc_security_group_ids      = [aws_security_group.sg.id]
   associate_public_ip_address = true
   key_name                    = var.existing_key_name
+  iam_instance_profile        = var.iam_instance_profile
+  user_data                   = var.user_data
 
   tags = {
     Name = var.name
